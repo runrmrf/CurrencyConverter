@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
         Double usd = hkd / 8.25;
 
-        Toast.makeText(getApplicationContext(), usd.toString(), Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "= $" + usd.toString() + " USD", Toast.LENGTH_LONG).show();
 
     }
 
@@ -31,14 +31,25 @@ public class MainActivity extends AppCompatActivity {
         hkdAmount.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                boolean handled = false;
-                if(actionId == EditorInfo.IME_ACTION_DONE) {
 
-                    btnSubmit(view);
+                try {
 
+                    if(actionId == EditorInfo.IME_ACTION_DONE) {
+
+                        btnSubmit(view);
+
+                    }
+
+                    return false;
+
+
+                } catch(Exception e){
+
+                    Toast.makeText(getApplicationContext(), "Please enter a number!", Toast.LENGTH_SHORT).show();
+
+                    return false;
                 }
 
-                return false;
 
             }
 
