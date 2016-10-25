@@ -2,15 +2,18 @@ package com.mancng.currencyconverter;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    public void btnSubmit(View view) {
+    EditText hkdAmount;
 
-        EditText hkdAmount = (EditText) findViewById(R.id.txtAmount);
+    public void btnSubmit(View view) {
 
         Double hkd = Double.parseDouble(hkdAmount.getText().toString());
 
@@ -20,10 +23,37 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void selectText(final View view) {
+
+        hkdAmount.requestFocus();
+        hkdAmount.setText("");
+
+        hkdAmount.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if(actionId == EditorInfo.IME_ACTION_DONE) {
+
+                    btnSubmit(view);
+
+                }
+
+                return false;
+
+            }
+
+        });
+
+    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        hkdAmount = (EditText) findViewById(R.id.txtAmount);
+
     }
 }
